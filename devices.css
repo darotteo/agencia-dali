@@ -1,0 +1,71 @@
+/* A working portfolio in device frames. Each link goes to its full project. */
+.hero { grid-template-columns: 1fr 1.22fr; gap: 32px; view-timeline-name: --portfolio; view-timeline-axis: block; }
+.hero h1 { font-size: clamp(3.2rem, 5.9vw, 6rem); }
+.hero-work { display: block; max-width: 760px; }
+.device-scene { position: relative; width: 100%; aspect-ratio: 1.16; isolation: isolate; }
+.device { position: absolute; display: block; transform: rotate(var(--angle)); -webkit-user-drag: none; }
+.device:focus-visible { outline: 3px solid var(--violet); outline-offset: 10px; z-index: 8; }
+.device-frame { position: relative; display: block; background: #24242a; box-shadow: 0 18px 32px -18px #17142380; }
+.device-screen { display: block; position: relative; overflow: hidden; background: #f8f7f4; }
+.screen-image { display: block; width: 100%; height: auto; max-width: none; pointer-events: none; }
+.notebook .device-frame { padding: 9px 6px 14px; border-radius: 10px 10px 3px 3px; }
+.notebook .device-screen { aspect-ratio: 16 / 10; border-radius: 3px; }
+.device-camera { position: absolute; width: 3px; height: 3px; top: 3px; left: calc(50% - 1.5px); border-radius: 50%; background: #6d6d76; }
+.device-brand { position: absolute; inset: auto 0 2px; text-align: center; font-size: 6px; line-height: 9px; color: #dedee4; letter-spacing: .02em; }
+.notebook-base { position: relative; display: block; width: 112%; height: 8px; margin-left: -6%; border-radius: 1px 1px 60% 60% / 1px 1px 8px 8px; background: linear-gradient(#d4d4dd, #a7a7b2); box-shadow: 0 10px 16px -9px #17142380; }
+.notebook-base::before { content: ''; position: absolute; top: 0; left: 42%; width: 16%; height: 3px; border-radius: 0 0 4px 4px; background: #8e8e9a; }
+.phone .device-frame { padding: 5px; border-radius: 22px; background: #202026; box-shadow: 0 18px 28px -12px #17142370; }
+.phone .device-screen { aspect-ratio: 9 / 19.5; border-radius: 17px; }
+.phone .device-screen::after { content: ''; position: absolute; z-index: 1; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 1px #ffffff26; border-radius: inherit; }
+.phone-island { position: absolute; z-index: 2; top: 8px; left: 36%; width: 28%; height: 7px; border-radius: 8px; background: #19191f; }
+.phone-home { position: absolute; z-index: 2; bottom: 9px; left: 34%; width: 32%; height: 3px; border-radius: 3px; background: #a7a5b0; }
+.device-nova { width: 55%; left: 4%; top: 3%; z-index: 1; --angle: -9deg; --end-angle: -12deg; --drift-x: -12px; --drift-y: -28px; --screen-travel: -70px; }
+.device-patagonia { width: 77%; left: 12%; top: 25%; z-index: 3; --angle: -4deg; --end-angle: 0deg; --drift-x: 10px; --drift-y: -46px; --screen-travel: -140px; }
+.device-lumina { width: 54%; left: 43%; top: 65%; z-index: 4; --angle: 6deg; --end-angle: 2deg; --drift-x: -10px; --drift-y: -16px; --screen-travel: -85px; }
+.device-syncrobeat { width: 20%; left: 0%; top: 43%; z-index: 5; --angle: -9deg; --end-angle: -4deg; --drift-x: -12px; --drift-y: -66px; --screen-travel: -130px; }
+.device-soma { width: 19%; left: 79%; top: 9%; z-index: 4; --angle: 8deg; --end-angle: 12deg; --drift-x: 14px; --drift-y: -24px; --screen-travel: -150px; }
+.showcase-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 32px; padding: 16px 0 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .8125rem; }
+.scroll-cue { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; flex: none; border: 1px solid #cfccd6; border-radius: 50%; color: var(--violet); }
+@keyframes devices-on-scroll {
+  from { transform: translate3d(0, 0, 0) rotate(var(--angle)); }
+  to { transform: translate3d(var(--drift-x), var(--drift-y), 0) rotate(var(--end-angle)); }
+}
+@keyframes screens-on-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(var(--screen-travel)); }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .device { animation: devices-on-scroll linear both; animation-timeline: --portfolio; animation-range: exit 0% exit 85%; }
+    .screen-image { animation: screens-on-scroll linear both; animation-timeline: --portfolio; animation-range: exit 0% exit 85%; }
+  }
+}
+@media (max-width: 1100px) and (min-width: 901px) {
+  .hero { gap: 24px; }
+  .hero h1 { font-size: 5.6vw; }
+  .showcase-foot { font-size: .75rem; gap: 8px; }
+}
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 40px; }
+  .hero h1 { font-size: clamp(3.2rem, 10vw, 5rem); }
+  .hero-work { max-width: 640px; justify-self: center; }
+}
+@media (max-width: 480px) {
+  .hero { gap: 40px; }
+  .hero h1 { font-size: clamp(2.8rem, 11vw, 3.3rem); }
+  .notebook .device-frame { padding: 6px 4px 11px; border-radius: 6px 6px 2px 2px; }
+  .device-camera { width: 2px; height: 2px; top: 2px; }
+  .device-brand { font-size: 4px; line-height: 7px; }
+  .notebook-base { height: 5px; }
+  .notebook-base::before { height: 2px; }
+  .phone .device-frame { padding: 3px; border-radius: 13px; }
+  .phone .device-screen { border-radius: 10px; }
+  .phone-island { height: 4px; top: 5px; }
+  .phone-home { height: 2px; bottom: 6px; }
+  .showcase-foot { margin-top: 24px; font-size: .75rem; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .device, .screen-image { animation: none; }
+  .device { transform: rotate(var(--angle)); }
+  .screen-image { transform: none; }
+}

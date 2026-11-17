@@ -1,0 +1,94 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sōma — Objetos de diseño</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@500;700&display=swap" rel="stylesheet"><style>:root{--scene:url("../../assets/1b440c273c0613409b10.webp")}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,blockquote{margin:0}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;border:0;background:none;color:inherit;padding:0}
+details summary{list-style:none}details summary::-webkit-details-marker{display:none}
+:focus-visible{outline:3px solid #2576ff;outline-offset:4px}
+.demo-bar{display:flex;justify-content:space-between;align-items:center;gap:15px;background:#191a1f;color:#f5f4f1;padding:10px 4%;font:400 10px Arial,sans-serif;position:relative;z-index:20}
+.demo-bar a{text-decoration:underline;text-underline-offset:3px}.motion-toggle{font-size:10px;padding:4px 0;white-space:nowrap}
+.demo-footer{display:flex;justify-content:space-between;gap:25px;align-items:center;padding:24px 5%;font:400 11px Arial,sans-serif}
+.reveal{animation:enter .9s both}
+.paused *,.paused *:before,.paused *:after{animation-play-state:paused!important}
+@keyframes enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes bars{from{transform:scaleY(.7)}to{transform:scaleY(1)}}
+@keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{50%{transform:translateY(-8px) rotate(3deg)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+@media(max-width:600px){.demo-bar{font-size:9px;padding:10px 5%}.demo-bar .demo-status{display:none}.demo-footer{flex-direction:column;align-items:flex-start;gap:10px}}
+:root{--cream:#fff3d9;--ink:#13203d;--blue:#2447d6;--yellow:#ffc933;--red:#ff4f2e;--sky:#a4d3f5;--pink:#ffb3c7;--head:'Bricolage Grotesque','Arial Black',system-ui,sans-serif;--body:'DM Sans',system-ui,sans-serif;--bd:3px solid var(--ink);--sh:6px 6px 0 var(--ink)}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-weight:500}
+.nav{display:flex;justify-content:space-between;align-items:center;margin:22px 4% 0;padding:12px 14px 12px 24px;background:#fff;border:var(--bd);border-radius:99px;box-shadow:var(--sh);position:relative;z-index:3}
+.logo{font:800 34px var(--head);letter-spacing:-.05em}.logo span{color:var(--red)}
+.nav nav{display:flex;gap:26px;align-items:center;font-size:14px;font-weight:700}
+.nav nav a:hover{color:var(--blue)}
+.tag{background:var(--yellow);border:var(--bd);border-radius:99px;padding:9px 18px;font-weight:700;font-size:13px;transition:transform .2s}.tag:hover{transform:rotate(-3deg) scale(1.04)}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:34px;padding:46px 4% 70px;align-items:stretch}
+.hero-l{background:var(--yellow);border:var(--bd);border-radius:34px;box-shadow:var(--sh);padding:48px 44px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.kick{display:inline-block;align-self:flex-start;background:#fff;border:var(--bd);border-radius:99px;padding:7px 15px;font-size:12px;font-weight:700;margin-bottom:26px}
+.hero h1{font-family:var(--head);font-weight:800;font-size:clamp(48px,6vw,92px);line-height:.94;letter-spacing:-.035em}
+.hero h1 .s{display:inline-block;background:var(--red);color:var(--cream);border:var(--bd);border-radius:18px;padding:0 .14em .04em;transform:rotate(-2.5deg);box-shadow:5px 5px 0 var(--ink);margin-top:.12em}
+.hero p{font-size:17px;line-height:1.6;max-width:380px;margin:30px 0 32px;font-weight:500}
+.btn{display:inline-flex;align-self:flex-start;align-items:center;gap:12px;background:var(--ink);color:var(--cream);border:var(--bd);border-radius:99px;padding:15px 26px;font:700 15px var(--body);box-shadow:5px 5px 0 var(--blue);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--blue)}
+.hero-r{position:relative;border:var(--bd);border-radius:34px;box-shadow:var(--sh);background:var(--scene) center/cover;min-height:560px;overflow:hidden}
+.seal{position:absolute;right:20px;bottom:20px;width:116px;height:116px;border-radius:50%;background:var(--cream);border:var(--bd);display:grid;place-items:center;text-align:center;font:800 11px/1.25 var(--head);letter-spacing:.02em;transform:rotate(-12deg);animation:bob 7s ease-in-out infinite}
+.seal b{display:block;font-size:34px;line-height:1;color:var(--red)}
+.sec{padding:70px 4%}
+.head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:34px}
+.over{display:inline-block;background:var(--ink);color:var(--cream);border-radius:99px;padding:7px 14px;font-size:12px;font-weight:700}
+.head h2{font-family:var(--head);font-weight:800;font-size:clamp(40px,5vw,74px);line-height:.97;letter-spacing:-.035em;margin-top:18px}
+.head p{max-width:290px;font-size:14px;line-height:1.65}
+.ctrl{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:34px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chips button{background:#fff;border:var(--bd);border-radius:99px;padding:10px 18px;font-size:13px;font-weight:700;transition:transform .15s}.chips button:hover{transform:translateY(-2px)}
+.chips button[aria-pressed=true]{background:var(--blue);color:#fff}
+.collection-count{font-size:13px;font-weight:700;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;align-items:start}
+.object-card[hidden]{display:none}
+.object-card{border:var(--bd);border-radius:28px;padding:14px 14px 20px;box-shadow:var(--sh);background:var(--sky);transition:transform .25s,box-shadow .25s}
+.object-card:nth-child(2){background:var(--pink);margin-top:38px}.object-card:nth-child(3){background:var(--yellow)}.object-card:nth-child(4){background:#b9e8c9;margin-top:38px}
+.object-card:hover{transform:translate(-4px,-4px) rotate(-.6deg);box-shadow:10px 10px 0 var(--ink)}
+.object-image{display:block;width:100%;position:relative;aspect-ratio:1/1.2;border:var(--bd);border-radius:20px;overflow:hidden;background:#fff}
+.object-image svg{width:100%;height:100%;transition:transform .5s}.object-image:hover svg{transform:scale(1.07)}
+.object-num{position:absolute;top:10px;left:10px;background:#fff;border:2px solid var(--ink);border-radius:99px;padding:4px 10px;font-size:11px;font-weight:800}
+.object-plus{position:absolute;bottom:10px;right:10px;width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--cream);display:grid;place-items:center;font-size:20px}
+.object-title{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:18px 6px 0}
+.object-title h3{font:800 24px var(--head);letter-spacing:-.04em}.object-title span{font-size:11px;font-weight:700;border:2px solid var(--ink);border-radius:99px;padding:3px 9px;background:#ffffffa0}
+.object-card>p{font-size:13px;margin:8px 6px 0}
+.story{margin:20px 4% 0;background:var(--blue);color:var(--cream);border:var(--bd);border-radius:36px;box-shadow:var(--sh);display:grid;grid-template-columns:1.1fr .9fr;overflow:hidden}
+.story-copy{padding:64px 54px}.story .over{background:var(--yellow);color:var(--ink)}
+.story h2{font-family:var(--head);font-weight:800;font-size:clamp(40px,4.6vw,68px);line-height:.98;letter-spacing:-.035em;margin:22px 0}
+.story p{max-width:380px;font-size:16px;line-height:1.65}
+.vals{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}.vals span{background:var(--cream);color:var(--ink);border:var(--bd);border-radius:99px;padding:8px 15px;font-size:13px;font-weight:700}
+.vals span:nth-child(1){transform:rotate(-2deg)}.vals span:nth-child(2){transform:rotate(1.5deg);background:var(--yellow)}.vals span:nth-child(3){transform:rotate(-1deg);background:var(--pink)}
+.story-art{background:var(--red);display:grid;place-items:center;padding:36px;border-left:var(--bd)}
+.story-art svg{width:84%;max-width:330px;height:340px;border:var(--bd);border-radius:140px 140px 24px 24px;background:#fff;box-shadow:10px 10px 0 var(--ink);transform:rotate(4deg);animation:bob 9s ease-in-out infinite}
+.contact{margin:50px 4% 30px;background:var(--red);color:var(--cream);border:var(--bd);border-radius:36px;box-shadow:var(--sh);padding:64px 54px;display:flex;justify-content:space-between;align-items:center;gap:40px}
+.contact h2{font-family:var(--head);font-weight:800;font-size:clamp(38px,4.8vw,72px);line-height:.98;letter-spacing:-.035em}
+.contact .btn{background:var(--yellow);color:var(--ink);box-shadow:5px 5px 0 var(--ink);white-space:nowrap}.contact .btn:hover{box-shadow:8px 8px 0 var(--ink)}
+.demo-footer{font-family:var(--body);font-weight:700}
+.product-dialog{padding:0;border:var(--bd);width:880px;max-width:calc(100% - 30px);max-height:90dvh;overflow:auto;background:var(--cream);color:var(--ink);border-radius:30px;box-shadow:10px 10px 0 var(--ink)}
+.product-dialog::backdrop{background:#13203dcc}
+.product-detail{display:grid;grid-template-columns:1fr 1fr}.detail-art{background:var(--sky);display:grid;place-items:center;min-height:420px;border-right:var(--bd)}.detail-art svg{width:100%;height:100%;max-height:490px}
+.detail-copy{padding:34px}.detail-close{float:right;background:var(--ink);color:var(--cream);width:36px;height:36px;border-radius:50%;font-size:22px}
+.detail-copy .overline{display:inline-block;background:var(--yellow);border:2px solid var(--ink);border-radius:99px;padding:5px 12px;font-size:11px;font-weight:800}
+.detail-copy h2{font:800 46px/.95 var(--head);letter-spacing:-.05em;margin:34px 0 18px}.detail-copy p{font-size:15px;line-height:1.6}
+.detail-spec{border-top:3px solid var(--ink);padding-top:18px;margin-top:24px;font-size:14px;line-height:1.8;font-weight:700}.detail-note{font-size:11px!important;margin-top:22px}
+.product-defs{position:absolute;width:0;height:0;overflow:hidden}
+@media(max-width:860px){.nav{margin:14px 4% 0;padding:10px 12px 10px 18px}.nav nav a:not(.tag){display:none}.hero{grid-template-columns:1fr;padding:30px 4% 50px}.hero-l{padding:34px 26px}.hero-r{min-height:380px}
+.sec{padding:50px 4%}.head,.ctrl{flex-direction:column;align-items:flex-start;gap:18px}.grid{grid-template-columns:1fr 1fr;gap:16px}.object-card:nth-child(2),.object-card:nth-child(4){margin-top:0}.object-title{flex-direction:column;gap:6px}
+.story{grid-template-columns:1fr}.story-copy{padding:40px 26px}.story-art{border-left:0;border-top:var(--bd);padding:44px 20px}.contact{flex-direction:column;align-items:flex-start;padding:40px 26px}
+.product-detail{grid-template-columns:1fr}.detail-art{min-height:260px;border-right:0;border-bottom:var(--bd)}.detail-copy h2{font-size:38px}}
+</style></head><body><div class="demo-bar"><a href="#" data-return>← Agencia Dali</a><span class="demo-status">Proyecto conceptual · Marca ficticia</span><button class="motion-toggle" aria-pressed="false">Pausar movimiento Ⅱ</button></div>
+<svg class="product-defs" aria-hidden="true"><defs><image id="product-photo" width="1536" height="1024" href="../../assets/1b440c273c0613409b10.webp"/></defs></svg>
+<header class="nav"><a class="logo" href="#inicio">sōma<span>.</span></a><nav aria-label="Navegación de Sōma"><a href="#coleccion">La colección</a><a href="#historia">Nuestra mirada</a><a class="tag" href="#coleccion">Colección 01 ↗</a></nav></header>
+<main>
+<section class="hero" id="inicio"><div class="hero-l reveal"><span class="kick">★ Colección 01</span><h1>Objetos con<br>diseño y<br><span class="s">carácter.</span></h1><p>Una colección de mobiliario, iluminación y objetos pensada para dar identidad a cada espacio.</p><a class="btn" href="#coleccion">Ver la colección <span aria-hidden="true">↗</span></a></div>
+<div class="hero-r" role="img" aria-label="Colección conceptual con butaca azul, jarrón rojo y lámpara amarilla"><div class="seal"><span><b>✳</b>DISEÑO<br>ACTUAL</span></div></div></section>
+<section class="sec" id="coleccion"><div class="head"><div><span class="over">01 — La colección</span><h2>Cuatro piezas.<br>Una misma identidad.</h2></div><p>Mobiliario, iluminación y objetos que se combinan entre sí. Explora la colección y consulta los detalles de cada pieza.</p></div>
+<div class="ctrl"><div class="chips" role="group" aria-label="Filtrar colección"><button data-filter="Todos" aria-pressed="true">Todos</button><button data-filter="Mobiliario" aria-pressed="false">Mobiliario</button><button data-filter="Iluminación" aria-pressed="false">Iluminación</button><button data-filter="Objetos" aria-pressed="false">Objetos</button></div><span class="collection-count" aria-live="polite">4 piezas / Colección 01</span></div>
+<div class="grid"><article class="object-card" data-cat="Mobiliario"><button class="object-image" data-product="0" aria-label="Ver ficha de Butaca Azul"><svg viewBox="500 330 610 590" role="img" aria-label="Butaca Azul"><use href="#product-photo"/></svg><span class="object-num">S—01</span><span class="object-plus">↗</span></button><div class="object-title"><h3>Butaca Azul</h3><span>Mobiliario</span></div><p>Tapizado textil · Estructura curva</p></article><article class="object-card" data-cat="Objetos"><button class="object-image" data-product="1" aria-label="Ver ficha de Jarrón Fuego"><svg viewBox="1135 160 235 525" role="img" aria-label="Jarrón Fuego"><use href="#product-photo"/></svg><span class="object-num">S—02</span><span class="object-plus">↗</span></button><div class="object-title"><h3>Jarrón Fuego</h3><span>Objetos</span></div><p>Cerámica esmaltada</p></article><article class="object-card" data-cat="Iluminación"><button class="object-image" data-product="2" aria-label="Ver ficha de Lámpara Sol"><svg viewBox="1265 490 230 290" role="img" aria-label="Lámpara Sol"><use href="#product-photo"/></svg><span class="object-num">S—03</span><span class="object-plus">↗</span></button><div class="object-title"><h3>Lámpara Sol</h3><span>Iluminación</span></div><p>Metal lacado · Luz cálida</p></article><article class="object-card" data-cat="Mobiliario"><button class="object-image" data-product="3" aria-label="Ver ficha de Mesa Nube"><svg viewBox="1095 690 420 270" role="img" aria-label="Mesa Nube"><use href="#product-photo"/></svg><span class="object-num">S—04</span><span class="object-plus">↗</span></button><div class="object-title"><h3>Mesa Nube</h3><span>Mobiliario</span></div><p>Acabado mineral</p></article></div></section>
+<section class="story" id="historia"><div class="story-copy"><span class="over">02 — Nuestra mirada</span><h2>El color como parte del diseño.</h2><p>Seleccionamos piezas de formas definidas, materiales de calidad y una paleta cromática pensada para integrarse con cada espacio.</p><div class="vals"><span>Formas definidas</span><span>Paleta cromática</span><span>Materiales de calidad</span></div></div>
+<div class="story-art"><svg viewBox="500 330 610 590" role="img" aria-label="Butaca Azul"><use href="#product-photo"/></svg></div></section>
+<section class="contact"><h2>¿Necesitas un catálogo<br>para tu marca?</h2><a class="btn" href="#" data-inquiry>Solicitar una propuesta ↗</a></section>
+</main><footer class="demo-footer"><span>Sōma · Catálogo conceptual, sin compras ni pagos</span><span>Diseño y desarrollo · Agencia Dali</span></footer>
+<dialog class="product-dialog" aria-labelledby="detail-title"><div class="product-detail"><div class="detail-art"></div><div class="detail-copy"><button class="detail-close" aria-label="Cerrar ficha">×</button><span class="overline">Colección 01 / Detalle</span><h2 id="detail-title"></h2><p id="detail-desc"></p><div class="detail-spec"></div><p class="detail-note">Objeto, imagen y especificaciones conceptuales.</p></div></div></dialog><script>document.querySelector('.motion-toggle').onclick=()=>{const paused=document.body.classList.toggle('paused');document.querySelector('.motion-toggle').textContent=paused?'Reanudar movimiento ▶':'Pausar movimiento Ⅱ';document.querySelector('.motion-toggle').setAttribute('aria-pressed',String(paused))};document.addEventListener('click',e=>{const a=e.target.closest('[data-return],[data-inquiry]');if(a){e.preventDefault();parent.postMessage({type:a.hasAttribute('data-inquiry')?'portfolio-contact':'portfolio-close'},'*')}});const specs=[["Butaca Azul","Tapizado textil · Estructura curva","Silueta envolvente y tapizado en azul cobalto, pensada como pieza central del ambiente.","78 × 84 × 76 cm"],["Jarrón Fuego","Cerámica esmaltada","Pieza escultórica de curvas suaves y esmalte rojo brillante.","24 × 54 cm"],["Lámpara Sol","Metal lacado · Luz cálida","Lámpara de mesa de líneas simples y luz cálida.","28 × 38 cm"],["Mesa Nube","Acabado mineral","Volúmenes simples y acabado mineral para acompañar el resto de la colección.","65 × 38 cm"]];const dlg=document.querySelector('.product-dialog');let opener;document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{let count=0;document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.querySelectorAll('.object-card').forEach(c=>{c.hidden=b.dataset.filter!=='Todos'&&c.dataset.cat!==b.dataset.filter;if(!c.hidden)count++});document.querySelector('.collection-count').textContent=count+' pieza'+(count===1?'':'s')+' / Colección 01'});document.querySelectorAll('[data-product]').forEach(b=>b.onclick=()=>{opener=b;const p=specs[+b.dataset.product];document.querySelector('.detail-art').innerHTML=b.querySelector('svg').outerHTML;document.getElementById('detail-title').textContent=p[0];document.getElementById('detail-desc').textContent=p[2];document.querySelector('.detail-spec').textContent=p[1]+' · '+p[3];dlg.showModal();document.querySelector('.detail-close').focus()});document.querySelector('.detail-close').onclick=()=>dlg.close();dlg.onclose=()=>opener?.focus();</script><style>.portfolio-return{position:fixed;bottom:14px;left:14px;z-index:9999;padding:10px 16px;border:1px solid #ffffff50;border-radius:999px;background:#17171fed;color:#fff;font:600 12px/1.5 Arial,sans-serif;box-shadow:0 4px 18px #0003;text-decoration:none}.portfolio-return:focus-visible{outline:3px solid #ada9ff;outline-offset:3px}</style><a class="portfolio-return" href="../../#proyectos">← Volver a Agencia Dali</a><script>if(window.self!==window.top)document.querySelector('.portfolio-return').hidden=true;</script></body></html>

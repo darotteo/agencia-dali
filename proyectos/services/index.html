@@ -1,0 +1,97 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nova — Consultoría estratégica</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,blockquote{margin:0}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;border:0;background:none;color:inherit;padding:0}
+details summary{list-style:none}details summary::-webkit-details-marker{display:none}
+:focus-visible{outline:3px solid #2576ff;outline-offset:4px}
+.demo-bar{display:flex;justify-content:space-between;align-items:center;gap:15px;background:#191a1f;color:#f5f4f1;padding:10px 4%;font:400 10px Arial,sans-serif;position:relative;z-index:20}
+.demo-bar a{text-decoration:underline;text-underline-offset:3px}.motion-toggle{font-size:10px;padding:4px 0;white-space:nowrap}
+.demo-footer{display:flex;justify-content:space-between;gap:25px;align-items:center;padding:24px 5%;font:400 11px Arial,sans-serif}
+.reveal{animation:enter .9s both}
+.paused *,.paused *:before,.paused *:after{animation-play-state:paused!important}
+@keyframes enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes bars{from{transform:scaleY(.7)}to{transform:scaleY(1)}}
+@keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{50%{transform:translateY(-8px) rotate(3deg)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+@media(max-width:600px){.demo-bar{font-size:9px;padding:10px 5%}.demo-bar .demo-status{display:none}.demo-footer{flex-direction:column;align-items:flex-start;gap:10px}}
+:root{--bg:#09090f;--s1:#12121b;--s2:#1a1a27;--line:#ffffff17;--lime:#c8ff3f;--vio:#8a6bff;--tx:#f3f3f8;--mute:#9a9ab2;--head:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,Consolas,monospace}
+body{background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,sans-serif}
+.top{display:flex;justify-content:space-between;align-items:center;padding:22px 5%;position:relative;z-index:2}
+.logo{font-family:var(--head);font-weight:700;font-size:28px;letter-spacing:-.04em}.logo i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--lime);margin-left:4px;box-shadow:0 0 14px var(--lime)}
+.top nav{display:flex;gap:30px;align-items:center;font:500 12px var(--mono);color:#c9c9de}
+.top nav a:hover{color:var(--lime)}
+.cta{border:1px solid var(--lime);color:var(--lime)!important;border-radius:10px;padding:10px 16px;transition:.25s}.cta:hover{background:var(--lime);color:#0a0a10!important}
+.hero{position:relative;text-align:center;padding:50px 5% 90px;overflow:hidden;isolation:isolate;background:radial-gradient(55% 55% at 50% 0%,#8a6bff3d,transparent 70%)}
+.hero:before{content:'';position:absolute;inset:0;z-index:-1;background-image:linear-gradient(#ffffff0d 1px,transparent 1px),linear-gradient(90deg,#ffffff0d 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(60% 70% at 50% 20%,#000,transparent);mask-image:radial-gradient(60% 70% at 50% 20%,#000,transparent)}
+.pill{display:inline-flex;gap:10px;align-items:center;font:500 12px var(--mono);border:1px solid var(--line);background:#ffffff0a;border-radius:99px;padding:8px 15px;color:#d4d4ea}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime)}
+.hero h1{font-family:var(--head);font-weight:700;font-size:clamp(44px,6vw,88px);line-height:1.02;letter-spacing:-.045em;max-width:980px;margin:30px auto 0}
+.hl{display:inline-block;background:var(--lime);color:#0a0a10;padding:0 .16em .05em;border-radius:.16em;transform:rotate(-1.6deg);margin-top:.08em}
+.hero p.sub{color:var(--mute);font-size:18px;line-height:1.65;max-width:540px;margin:30px auto 36px}
+.actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:12px;border-radius:12px;padding:15px 22px;font:600 14px var(--head);transition:transform .2s,box-shadow .2s,background .2s}
+.btn.lime{background:var(--lime);color:#0a0a10}.btn.lime:hover{transform:translateY(-3px);box-shadow:0 14px 34px -10px #c8ff3f88}
+.btn.ghost{border:1px solid var(--line);background:#ffffff08}.btn.ghost:hover{background:#ffffff14}
+.mini{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:16px;max-width:1120px;margin:80px auto 0;text-align:left}
+.card{background:linear-gradient(180deg,var(--s2),var(--s1));border:1px solid var(--line);border-radius:20px;padding:24px}
+.lab{font:500 11px var(--mono);color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.row{margin-top:18px}.row div{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}.row span.p{font:500 12px var(--mono);color:var(--mute)}
+.bar{height:6px;border-radius:9px;background:#ffffff14;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--vio),var(--lime));transform-origin:left;animation:grow 2.4s ease-out both}
+.stat b{display:block;font:700 76px/1 var(--head);letter-spacing:-.05em;margin:18px 0 8px;color:var(--lime)}.stat span{color:var(--mute);font-size:14px;line-height:1.5}
+.chart{display:flex;gap:9px;align-items:end;height:92px;margin-top:20px}.chart i{flex:1;background:#8a6bff55;border-radius:6px 6px 2px 2px;transform-origin:bottom;animation:bars 2.6s ease-in-out infinite alternate}
+.chart i:nth-child(2n){background:var(--vio);animation-delay:.5s}.chart i:last-child{background:var(--lime);animation-delay:.9s}
+.sec{padding:110px 5% 30px;max-width:1280px;margin:0 auto}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:44px}
+.over{font:500 12px var(--mono);color:var(--lime);letter-spacing:.06em;text-transform:uppercase}
+.sec h2,.method h2,.faq h2{font-family:var(--head);font-weight:700;font-size:clamp(34px,4vw,56px);letter-spacing:-.04em;line-height:1.05;margin-top:16px}
+.sec-head p{max-width:290px;color:var(--mute);font-size:14px;line-height:1.7}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(210px,auto);gap:16px}
+.b{border-radius:22px;padding:30px;border:1px solid var(--line);background:var(--s1);display:flex;flex-direction:column;justify-content:space-between;transition:transform .3s,border-color .3s}
+.b:hover{transform:translateY(-5px);border-color:#ffffff40}
+.b .i{font:500 12px var(--mono);color:var(--mute)}
+.b h3{font-family:var(--head);font-weight:700;font-size:26px;letter-spacing:-.03em;margin:30px 0 10px}.b p{color:var(--mute);font-size:14px;line-height:1.65}
+.b1{grid-column:span 4;grid-row:span 2;background:linear-gradient(140deg,#8a6bff,#4b2fe0);border:0;color:#fff;position:relative;overflow:hidden}
+.b1 .i{color:#ffffffb0}.b1 h3{font-size:clamp(38px,4.4vw,64px);line-height:1;max-width:420px;margin-bottom:18px}.b1 p{color:#ffffffcc;max-width:360px;font-size:16px}
+.b1:after{content:'';position:absolute;right:-70px;bottom:-70px;width:300px;height:300px;border-radius:50%;border:44px solid #c8ff3f33}
+.b2,.b3{grid-column:span 2}
+.method{margin:90px 5% 0;padding:70px 5%;border-radius:28px;background:var(--s1);border:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:8%;align-items:center;max-width:1280px;margin-left:auto;margin-right:auto}
+.tabs{display:inline-flex;gap:4px;margin-top:34px;padding:5px;border:1px solid var(--line);border-radius:14px;background:#ffffff08;flex-wrap:wrap}
+.tabs button{font:500 12px var(--mono);padding:11px 16px;border-radius:10px;color:#c2c2d8}
+.tabs button[aria-selected=true]{background:var(--lime);color:#0a0a10}
+.mcard{border-radius:22px;background:#0d0d15;border:1px solid var(--line);padding:36px;position:relative}
+.step-count{font:700 80px/1 var(--head);letter-spacing:-.05em;color:var(--lime)}.mcard h3{font-family:var(--head);font-weight:700;font-size:30px;letter-spacing:-.03em;margin:22px 0 14px;line-height:1.1}.mcard p{color:var(--mute);font-size:15px;line-height:1.7;max-width:380px}
+.faq{max-width:1280px;margin:0 auto;padding:110px 5% 60px;display:grid;grid-template-columns:.8fr 1.2fr;gap:10%}
+.faq details{border-bottom:1px solid var(--line);padding:22px 0}.faq summary{display:flex;justify-content:space-between;gap:20px;cursor:pointer;font:600 17px var(--head)}
+.faq summary:after{content:'+';font:400 26px/1 var(--mono);color:var(--lime);transition:transform .25s}.faq details[open] summary:after{transform:rotate(45deg)}
+.faq details p{color:var(--mute);font-size:15px;line-height:1.7;margin-top:14px;max-width:520px}
+.contact{margin:60px 3% 40px;border-radius:30px;background:var(--lime);color:#0a0a10;padding:80px 5%;display:flex;justify-content:space-between;align-items:center;gap:40px}
+.contact h2{font-family:var(--head);font-weight:700;font-size:clamp(38px,5.2vw,78px);letter-spacing:-.045em;line-height:1}
+.btn.dark{background:#0a0a10;color:var(--lime);white-space:nowrap}.btn.dark:hover{transform:translateY(-3px);box-shadow:0 14px 30px -10px #0008}
+.demo-footer{color:var(--mute);font-family:var(--mono)}
+@media(max-width:860px){.top nav a:not(.cta){display:none}.hero{padding:30px 6% 60px}.mini{grid-template-columns:1fr;margin-top:50px}.sec{padding:70px 6% 20px}.sec-head{flex-direction:column;align-items:flex-start;gap:16px}
+.bento{grid-template-columns:1fr}.b1,.b2,.b3{grid-column:auto;grid-row:auto}.method{grid-template-columns:1fr;margin:60px 4% 0;padding:40px 6%;gap:30px}.faq{grid-template-columns:1fr;padding:70px 6% 30px;gap:20px}.contact{flex-direction:column;align-items:flex-start;padding:50px 7%;margin:40px 4% 30px}}
+</style></head><body><div class="demo-bar"><a href="#" data-return>← Agencia Dali</a><span class="demo-status">Proyecto conceptual · Marca ficticia</span><button class="motion-toggle" aria-pressed="false">Pausar movimiento Ⅱ</button></div>
+<header class="top"><a class="logo" href="#inicio">nova<i></i></a><nav aria-label="Navegación de Nova"><a href="#servicios">/servicios</a><a href="#metodo">/método</a><a class="cta" href="#contacto">Contacto ↗</a></nav></header>
+<main>
+<section class="hero" id="inicio"><div class="reveal"><span class="pill"><i></i>Estrategia · Producto · Equipos</span>
+<h1>Estrategia clara para <span class="hl">decisiones concretas.</span></h1>
+<p class="sub">Ayudamos a equipos y empresas a definir prioridades y a convertirlas en un plan de acción medible.</p>
+<div class="actions"><a class="btn lime" href="#servicios">Ver servicios <span aria-hidden="true">↗</span></a><a class="btn ghost" href="#metodo">Conocer el método</a></div></div>
+<div class="mini" aria-hidden="true">
+<div class="card"><span class="lab">nova / roadmap</span><div class="row"><div><span>Explorar</span><span class="p">100%</span></div><div class="bar"><i style="width:100%"></i></div></div><div class="row"><div><span>Definir</span><span class="p">72%</span></div><div class="bar"><i style="width:72%"></i></div></div><div class="row"><div><span>Activar</span><span class="p">38%</span></div><div class="bar"><i style="width:38%"></i></div></div></div>
+<div class="card stat"><span class="lab">etapas</span><b>3</b><span>etapas, un único plan compartido.</span></div>
+<div class="card"><span class="lab">avance del equipo</span><div class="chart"><i style="height:30%"></i><i style="height:48%"></i><i style="height:42%"></i><i style="height:68%"></i><i style="height:82%"></i><i style="height:98%"></i></div></div>
+</div></section>
+<section class="sec" id="servicios"><div class="sec-head"><div><span class="over">// 01 servicios</span><h2>Servicios de<br>consultoría estratégica.</h2></div><p>Trabajamos sobre las necesidades del negocio con un enfoque práctico y orientado a resultados.</p></div>
+<div class="bento"><article class="b b1"><span class="i">01</span><div><h3>Definir el foco.</h3><p>Analizamos el contexto, formulamos las preguntas correctas e identificamos las prioridades.</p></div></article>
+<article class="b b2"><span class="i">02</span><div><h3>Diseñar la hoja de ruta.</h3><p>Traducimos las prioridades en un plan con decisiones, plazos y responsables.</p></div></article>
+<article class="b b3"><span class="i">03</span><div><h3>Acompañar la ejecución.</h3><p>Acompañamos al equipo, medimos los resultados y ajustamos el plan con cada aprendizaje.</p></div></article></div></section>
+<section class="method" id="metodo"><div><span class="over">// 02 metodología</span><h2>Un método en<br>tres etapas.</h2>
+<div class="tabs" role="tablist" aria-label="Etapas del método"><button role="tab" id="step-tab-0" data-step="0" aria-controls="method-panel" aria-selected="true">01 Explorar</button><button role="tab" id="step-tab-1" data-step="1" aria-controls="method-panel" aria-selected="false">02 Diseñar</button><button role="tab" id="step-tab-2" data-step="2" aria-controls="method-panel" aria-selected="false">03 Activar</button></div></div>
+<div class="mcard" id="method-panel" role="tabpanel" aria-labelledby="step-tab-0" aria-live="polite"><span class="step-count">01</span><h3 class="step-title">Comprender antes de actuar.</h3><p class="step-body">Escuchamos al equipo, revisamos el contexto y definimos las preguntas que orientan el punto de partida.</p></div></section>
+<section class="faq"><div><span class="over">// 03 preguntas frecuentes</span><h2>Preguntas frecuentes.</h2></div><div>
+<details><summary>¿Cómo comienza un proyecto?</summary><p>Con una conversación sobre el objetivo, el contexto y los desafíos del equipo. A partir de ahí se define una propuesta con alcance y entregables.</p></details>
+<details><summary>¿El proceso se adapta a cada equipo?</summary><p>Sí. Las etapas funcionan como guía y se ajustan al tamaño del proyecto, a los plazos y a la forma de trabajo del equipo.</p></details>
+<details><summary>¿Es el sitio de una empresa real?</summary><p>No. Nova es una marca ficticia; este sitio ilustra una propuesta de diseño y desarrollo para empresas de servicios.</p></details></div></section>
+<section class="contact" id="contacto"><h2>Un sitio web que comunique<br>tus servicios con claridad.</h2><a class="btn dark" href="#" data-inquiry>Solicitar una propuesta ↗</a></section>
+</main><footer class="demo-footer"><span>Nova · Concepto de consultoría</span><span>Diseño y desarrollo · Agencia Dali</span></footer><script>document.querySelector('.motion-toggle').onclick=()=>{const paused=document.body.classList.toggle('paused');document.querySelector('.motion-toggle').textContent=paused?'Reanudar movimiento ▶':'Pausar movimiento Ⅱ';document.querySelector('.motion-toggle').setAttribute('aria-pressed',String(paused))};document.addEventListener('click',e=>{const a=e.target.closest('[data-return],[data-inquiry]');if(a){e.preventDefault();parent.postMessage({type:a.hasAttribute('data-inquiry')?'portfolio-contact':'portfolio-close'},'*')}});const steps=[['01','Comprender antes de actuar.','Escuchamos al equipo, revisamos el contexto y definimos las preguntas que orientan el punto de partida.'],['02','Dar forma al plan.','Convertimos los hallazgos en prioridades y entregables concretos: un plan compartido que define qué hacer, por qué y en qué orden.'],['03','Poner el plan en marcha.','Acompañamos la implementación, revisamos los avances y ajustamos el rumbo según los resultados.']];const tabs=[...document.querySelectorAll('[data-step]')];function selectStep(b){tabs.forEach(x=>x.setAttribute('aria-selected',String(x===b)));const s=steps[+b.dataset.step];document.querySelector('.step-count').textContent=s[0];document.querySelector('.step-title').textContent=s[1];document.querySelector('.step-body').textContent=s[2];document.getElementById('method-panel').setAttribute('aria-labelledby',b.id)}tabs.forEach((b,i)=>{b.onclick=()=>selectStep(b);b.onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const j=e.key==='Home'?0:e.key==='End'?2:(i+(e.key==='ArrowRight'?1:-1)+3)%3;selectStep(tabs[j]);tabs[j].focus()}}});</script><style>.portfolio-return{position:fixed;bottom:14px;left:14px;z-index:9999;padding:10px 16px;border:1px solid #ffffff50;border-radius:999px;background:#17171fed;color:#fff;font:600 12px/1.5 Arial,sans-serif;box-shadow:0 4px 18px #0003;text-decoration:none}.portfolio-return:focus-visible{outline:3px solid #ada9ff;outline-offset:3px}</style><a class="portfolio-return" href="../../#proyectos">← Volver a Agencia Dali</a><script>if(window.self!==window.top)document.querySelector('.portfolio-return').hidden=true;</script></body></html>
