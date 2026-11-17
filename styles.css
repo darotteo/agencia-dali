@@ -135,6 +135,11 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1
 .next-body strong { font: 700 clamp(1.7rem, 2.6vw, 2.3rem)/1.1 var(--display); letter-spacing: -.035em; }
 .next-body > span:not(.btn) { color: #c9c6d3; max-width: 34ch; }
 .next-body .btn { margin-top: 12px; }
+.project-next { grid-column: 1 / -1; }
+.project-next .next-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 32px; min-height: 0; }
+.project-next .next-body strong, .project-next .next-body > span:not(.btn) { grid-column: 1; }
+.project-next .next-body > span:not(.btn) { max-width: 52ch; }
+.project-next .next-body .btn { grid-column: 2; grid-row: 1 / span 2; align-self: center; margin-top: 0; }
 @media (hover: hover) { .project-next:hover .btn { background: var(--violet-hover); } }
 
 /* Services */
@@ -186,6 +191,8 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1
   .head { grid-template-columns: 1fr; }
   .head p { justify-self: start; }
   .grid { grid-template-columns: 1fr; }
+  .project-next .next-body { display: flex; gap: 12px; }
+  .project-next .next-body .btn { align-self: flex-start; margin-top: 12px; }
   .services li { grid-template-columns: 1fr; }
   #servicios .head { margin-bottom: 28px; }
   .services li { gap: 8px; padding-block: 24px; }
