@@ -18,7 +18,7 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
   function measure() {
     const rect = hero.getBoundingClientRect();
-    bounds = { top: rect.top + scrollY, range: Math.max(rect.height * .85, 1) };
+    bounds = { top: 0, range: Math.max(innerHeight, 1) }; // same range as the CSS: 0 to 100vh of page scroll
     entries = devices.map(device => {
       const image = device.querySelector('.screen-image');
       const screen = device.querySelector('.device-screen');
