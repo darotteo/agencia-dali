@@ -47,8 +47,7 @@
 .play-bar { display: flex; align-items: center; gap: 5cqi; }
 .play-bar span { flex: 1; }
 .play-head { display: flex; align-items: center; gap: 4.5cqi; }
-.play-icon { display: grid; flex: none; place-items: center; width: 19cqi; aspect-ratio: 1; border-radius: 22%; background: var(--violet); color: #fff; font: 800 9.5cqi/1 var(--display); letter-spacing: -.05em; box-shadow: 0 .4cqi 1.4cqi rgba(0, 0, 0, .28); }
-.play-icon i { color: var(--lavender); font-style: normal; }
+.play-icon { flex: none; width: 19cqi; height: 19cqi; border-radius: 22%; box-shadow: 0 .4cqi 1.4cqi rgba(0, 0, 0, .28); }
 .play-head b { display: block; font-size: 6.2cqi; font-weight: 500; line-height: 1.15; }
 .play-head em { display: block; color: #01875f; font-style: normal; font-weight: 500; }
 .play-head small { display: block; color: #5f6368; font-size: 3cqi; }
@@ -58,20 +57,17 @@
 .play-stats i { display: inline-block; padding: 0 .9cqi; border: .35cqi solid currentColor; border-radius: .6cqi; font-size: 2.8cqi; font-style: normal; line-height: 1.3; }
 .play-install { display: grid; flex: none; place-items: center; height: 9.5cqi; border-radius: 999px; background: #01875f; color: #fff; font-size: 3.8cqi; font-weight: 500; }
 .play-shots { display: flex; gap: 2.4cqi; margin-right: -5cqi; }
-.play-shots span { flex: none; width: 46cqi; aspect-ratio: 9 / 19; border-radius: 2.6cqi; background: #eee center top / cover no-repeat; }
-.play-shots span:nth-child(1) { background-image: url("assets/img/screen-syncrobeat.webp"); }
-.play-shots span:nth-child(2) { background-image: url("assets/img/screen-copahue.webp"); }
-.play-shots span:nth-child(3) { background-image: url("assets/img/screen-soma.webp"); }
+.play-shots img { flex: none; width: 46cqi; height: auto; aspect-ratio: 300 / 633; border-radius: 2.6cqi; background: #0b0b0b; }
 .play-about { display: flex; align-items: center; justify-content: space-between; }
 .play-about b { font-size: 4.4cqi; font-weight: 500; }
 .play-desc { margin-top: -2.8cqi; color: #5f6368; }
 /* Android heads-up notification */
-.notif { top: 8%; right: 0; display: flex; align-items: flex-start; gap: 10px; padding: 12px 18px 12px 12px; border-radius: 22px; background: rgba(243, 241, 248, .97); font: 400 .8rem/1.35 Roboto, var(--body); transform: translateZ(90px); }
+.notif { top: 8%; right: 0; display: flex; align-items: flex-start; gap: 10px; padding: 12px 18px 12px 12px; border-radius: 22px; background: rgba(243, 241, 248, .97); font: 400 .8rem/1.35 Roboto, var(--body); transform: translateZ(150px); } /* well in front of the tilted phone, or its plane cuts the card */
 .notif::before { display: none; }
 .notif > span:last-child { display: grid; }
 .notif b { font-size: .9rem; }
 .notif small:first-child { font-size: .72rem; }
-.notif-icon { display: grid; flex: none; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--violet); color: #fff; font: 800 .95rem/1 var(--display); }
+.notif-icon { flex: none; width: 30px; height: 30px; border-radius: 9px; }
 
 .profile { display: grid; justify-items: center; perspective: 1200px; }
 .profile .tilt { width: min(420px, 100%); }
@@ -115,6 +111,6 @@
   .kinds-stage .tilt { height: 420px; }
   .float { font-size: .8rem; padding: 10px 12px 10px 20px; }
   .float::before { top: 14px; }
-  .notif { top: 4%; right: 2%; transform: none; }
+  .notif { top: auto; bottom: 6%; right: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .kind-visual { transition: opacity .2s ease; transform: none; } }
