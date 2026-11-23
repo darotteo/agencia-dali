@@ -26,7 +26,10 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scrollbar-color: #34333b var(--night); }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scrollbar-color: var(--violet) var(--night); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--night); }
+::-webkit-scrollbar-thumb { border: 2px solid var(--night); border-radius: 999px; background: var(--violet); }
 body { margin: 0; background: var(--night); color: var(--text); font: 400 1.0625rem/1.6 var(--body); -webkit-font-smoothing: antialiased; caret-color: var(--lavender); }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -57,12 +60,12 @@ h1, h2, h3 { text-wrap: balance; }
 
 /* Nav: one segmented pill, light over every section */
 .nav { position: fixed; z-index: 50; top: 14px; left: 0; right: 0; display: flex; justify-content: center; pointer-events: none; }
-.pill { display: flex; gap: 4px; padding: 4px; border: 1px solid rgba(11, 11, 13, .08); border-radius: 13px; background: rgba(255, 255, 255, .82); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 8px 24px -12px rgba(11, 11, 13, .35); pointer-events: auto; }
-.pill a { display: flex; align-items: center; justify-content: center; height: 36px; padding: 0 14px; border: 1px solid #e4e4e8; border-radius: 9px; background: #fff; color: var(--ink); font: 500 .84rem/1 var(--body); transition: background-color .2s ease; }
-@media (hover: hover) { .pill a:not(.pill-cta):hover { background: #f1f1f4; } }
-.pill .pill-logo { width: 36px; padding: 0; background: #ececf0; font: 800 1.05rem/1 var(--display); letter-spacing: -.04em; }
+.pill { display: flex; align-items: center; gap: 2px; padding: 5px; border: 1px solid rgba(11, 11, 13, .08); border-radius: 999px; background: rgba(255, 255, 255, .82); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 8px 24px -12px rgba(11, 11, 13, .35); pointer-events: auto; }
+.pill a { display: flex; align-items: center; justify-content: center; height: 38px; padding: 0 15px; border-radius: 999px; background: transparent; color: var(--ink); font: 500 .84rem/1 var(--body); transition: background-color .2s ease; }
+@media (hover: hover) { .pill a:not(.pill-cta):hover { background: rgba(11, 11, 13, .06); } }
+.pill .pill-logo { width: 38px; padding: 0; font: 800 1.05rem/1 var(--display); letter-spacing: -.04em; }
 .pill-logo span, .foot .pill-logo span { color: var(--violet); }
-.pill .pill-cta { border-color: var(--ink); background: var(--ink); color: #fff; }
+.pill .pill-cta { background: var(--ink); color: #fff; }
 @media (hover: hover) { .pill .pill-cta:hover { background: #26262c; } }
 
 /* Hero: the chrome D inside a ring of work, with the line running behind */
@@ -125,10 +128,12 @@ h1, h2, h3 { text-wrap: balance; }
 .fly-pin { position: sticky; top: 0; height: 100svh; overflow: clip; perspective: 900px; background: radial-gradient(60% 55% at 50% 62%, rgba(81, 70, 229, .32), rgba(81, 70, 229, 0) 70%), var(--night); }
 .fly-field { position: absolute; inset: 0; transform-style: preserve-3d; }
 .shard { position: absolute; top: 50%; left: 50%; width: clamp(130px, 17vw, 270px); height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: top; border-radius: 14px; opacity: 0; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .7); will-change: transform, opacity; }
+.shard.sq { aspect-ratio: 1; object-position: center; }
 .fly-stage { position: absolute; z-index: 1; inset: 0; display: grid; place-items: center; padding: 96px 24px 64px; }
 .fly-stage::before { content: ''; position: absolute; inset: 15% 8%; background: radial-gradient(closest-side, rgba(6, 6, 7, .9), rgba(6, 6, 7, .6) 55%, rgba(6, 6, 7, 0)); pointer-events: none; }
-.stage { position: relative; grid-area: 1 / 1; max-width: 44rem; text-align: center; }
-.stage h2, .stage h3 { font: 300 clamp(3rem, 7.4vw, 6.5rem)/.95 var(--display); letter-spacing: -.04em; }
+.stage { position: relative; grid-area: 1 / 1; max-width: 62rem; text-align: center; }
+.stage h2, .stage h3 { font: 800 clamp(3.2rem, 9vw, 8.5rem)/.88 var(--display); letter-spacing: -.04em; }
+.stage-intro h2 { font-size: clamp(3.6rem, 11vw, 10.5rem); }
 .stage p { max-width: 40ch; margin: 22px auto 0; color: #d4d1dd; font-size: clamp(1.05rem, 1.4vw, 1.2rem); }
 .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 24px 0 26px; }
 .tags li { padding: 6px 13px; border: 1px solid rgba(255, 255, 255, .18); border-radius: 999px; color: #e4e2ea; font-size: .85rem; }

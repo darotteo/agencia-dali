@@ -72,7 +72,7 @@ const scenes = [];
     if (r.bottom < 0 || r.top > innerHeight) return;
     const p = progress(fly);
     for (const s of shards) {
-      const z = -4200 + s.z + p * 4600;
+      const z = -4200 + s.z * 1.02 + p * 4700;
       s.el.style.transform = `translate(-50%, -50%) translate3d(${s.x}vw, ${s.y}vh, ${z.toFixed(0)}px)`;
       s.el.style.opacity = (clamp((z + 4200) / 1400) * clamp((420 - z) / 320)).toFixed(3);
     }
