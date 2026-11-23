@@ -76,7 +76,7 @@ h1, h2, h3 { text-wrap: balance; }
 .spark { flex: none; width: .3em; height: .3em; margin-right: .5em; border-radius: 50%; background: var(--violet); font-size: clamp(4rem, 11vw, 10.5rem); }
 .ring-tilt { position: absolute; top: 46%; left: 50%; transform-style: preserve-3d; transform: rotateX(-7deg) rotateZ(-3deg); }
 .ring { transform-style: preserve-3d; }
-.card { --w: clamp(96px, min(13vw, 22svh), 210px); position: absolute; top: calc(var(--w) * -.889); left: calc(var(--w) / -2); width: var(--w); aspect-ratio: 9 / 16; overflow: hidden; border-radius: calc(var(--w) * .11); background: #141418; transform: rotateY(calc(var(--i) * 45deg)) translateZ(calc(var(--w) * 1.85)); box-shadow: 0 34px 60px -26px rgba(26, 16, 80, .55); }
+.card { --w: clamp(90px, min(12vw, 21svh), 190px); position: absolute; top: calc(var(--w) * -.889); left: calc(var(--w) / -2); width: var(--w); aspect-ratio: 9 / 16; overflow: hidden; border-radius: calc(var(--w) * .11); background: #141418; transform: rotateY(calc(var(--i) * 30deg)) translateZ(calc(var(--w) * 2.3)); box-shadow: 0 34px 60px -26px rgba(26, 16, 80, .55); }
 .card img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .card-brand { display: flex; flex-direction: column; justify-content: space-between; padding: calc(var(--w) * .09); background: radial-gradient(120% 70% at 75% 18%, #a99ff7 0%, #5146e5 30%, #1d1550 62%, #08070d 100%); color: #fff; }
 .card-brand-2 { background: radial-gradient(110% 70% at 20% 85%, #c7b9ff 0%, #5146e5 28%, #1d1550 60%, #08070d 100%); }
@@ -84,6 +84,14 @@ h1, h2, h3 { text-wrap: balance; }
 .card-mark i { color: var(--violet); font-style: normal; }
 .card-text { font: 300 calc(var(--w) * .13)/1.02 var(--display); letter-spacing: -.03em; }
 .card-text b { font-weight: 600; }
+/* Instagram posts from the managed accounts, as they appear in the feed */
+.card-ig { display: flex; flex-direction: column; background: #fff; color: #000; }
+.ig-top { display: flex; align-items: center; gap: calc(var(--w) * .05); height: calc(var(--w) * .2); padding: 0 calc(var(--w) * .06); font: 600 calc(var(--w) * .062)/1 -apple-system, "SF Pro Text", var(--body); }
+.ig-top b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.card .ig-top img { flex: none; width: calc(var(--w) * .12); height: calc(var(--w) * .12); border-radius: 50%; box-shadow: 0 0 0 calc(var(--w) * .012) #fff, 0 0 0 calc(var(--w) * .022) #d62976; }
+.card .ig-shot { flex: none; height: auto; aspect-ratio: 3 / 4; }
+.ig-icons { display: flex; gap: calc(var(--w) * .06); padding: calc(var(--w) * .06); }
+.ig-icons svg { width: calc(var(--w) * .1); height: calc(var(--w) * .1); fill: none; stroke: #000; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .hero-d { position: absolute; top: 46%; left: 50%; width: clamp(170px, min(28vw, 44svh), 380px); aspect-ratio: 1; transform: translate(-50%, -50%) translateZ(10px); pointer-events: none; }
 .d-poster { position: absolute; inset: 14%; width: 72%; height: 72%; transition: opacity .6s ease; }
 .d-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .6s ease; }
@@ -220,6 +228,12 @@ html:not(.js) .stage, .calm .stage { grid-area: auto; margin-inline: auto; }
 .foot nav a:hover { color: var(--ink); }
 .foot .pill-logo { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9px; background: #e6e6ea; color: var(--ink); font: 800 1.05rem/1 var(--display); letter-spacing: -.04em; }
 
+/* WhatsApp bubble: always one tap away */
+.wa-float { position: fixed; z-index: 60; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; box-shadow: 0 12px 28px -10px rgba(0, 0, 0, .5), 0 2px 6px rgba(0, 0, 0, .18); transition: transform .2s var(--ease-out), background-color .2s ease; }
+.wa-float svg { width: 30px; height: 30px; fill: currentColor; }
+.wa-float:active { transform: scale(.94); }
+@media (hover: hover) and (pointer: fine) { .wa-float:hover { transform: scale(1.06); background: #1fbf5a; } }
+
 /* Motion: one opening, then everything else follows the scroll */
 @media (prefers-reduced-motion: no-preference) {
   .ring { animation: spin 52s linear infinite; }
@@ -228,12 +242,14 @@ html:not(.js) .stage, .calm .stage { grid-area: auto; margin-inline: auto; }
   .marquee { animation: fade-in 1.2s .15s ease both; }
   .hero-d { animation: land 1.4s .1s var(--ease-out) both; }
   .hero-foot { animation: rise .9s .35s var(--ease-out) both; }
+  .wa-float { animation: pop .5s 1s var(--ease-out) backwards; }
 }
 @keyframes spin { to { transform: rotateY(-360deg); } }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @keyframes ring-in { from { opacity: 0; transform: rotateX(-24deg) rotateZ(-3deg) translateY(90px) scale(.82); } }
 @keyframes fade-in { from { opacity: 0; } }
 @keyframes land { from { opacity: 0; transform: translate(-50%, -44%) translateZ(10px) scale(.9); } }
+@keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.85); } }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
@@ -241,7 +257,7 @@ html:not(.js) .stage, .calm .stage { grid-area: auto; margin-inline: auto; }
 @media (max-width: 860px) {
   .wrap { width: calc(100% - 32px); }
   .hide-md { display: none !important; }
-  .card { --w: clamp(96px, min(33vw, 21svh), 170px); }
+  .card { --w: clamp(84px, min(27vw, 17svh), 150px); }
   .hero-d { width: clamp(170px, 56vw, 280px); }
   .marquee, .ring-tilt, .hero-d { top: 54%; }
   .marquee-track span { font-size: clamp(3.6rem, 19vw, 7rem); }
@@ -260,6 +276,7 @@ html:not(.js) .stage, .calm .stage { grid-area: auto; margin-inline: auto; }
 }
 @media (max-width: 600px) { .hide-sm { display: none !important; } }
 @media (max-width: 480px) {
+  .wa-float { width: 54px; height: 54px; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); }
   .pill a { padding: 0 11px; }
   .hero-foot .btn, .block .btn { width: 100%; }
   .actions { width: 100%; }
