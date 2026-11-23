@@ -94,24 +94,30 @@ document.querySelectorAll('[data-tilt]').forEach((area) => {
 (() => {
   const card = document.querySelector('.profile-card');
   if (!card) return;
+  // Public profile data as shown on Instagram in November 2026.
   const accounts = [
-    { handle: 'aldeatermalcopahue', category: 'Cabañas y departamentos en Copahue', avatar: 'A' },
-    { handle: 'lasaraucariascaviahue', category: 'Alojamiento en Caviahue, Neuquén', avatar: 'LA' },
-    { handle: 'ananda_caviahue', category: 'Cabañas en Caviahue', avatar: 'An' },
-    { handle: 'hosteria_hualcupen', category: 'Complejo termal en Copahue', avatar: 'H' },
-    { handle: 'somoscopahue', category: 'Asociación de hoteleros de Copahue', avatar: 'C' }
+    { handle: 'aldeatermalcopahue', name: 'Aldea Termal', bio: 'Complejo Hotelero en las Termas de Copahue', posts: '160', followers: '846', following: '141' },
+    { handle: 'lasaraucariascaviahue', name: 'Las Araucarias Caviahue', bio: 'Nuestra cabaña de montaña es ese refugio que invita a bajar el ritmo y disfrutar de lo simple.', posts: '183', followers: '3.689', following: '130' },
+    { handle: 'ananda_caviahue', name: 'Ananda Caviahue', bio: 'Despertate mirando el Lago Caviahue en un lugar soñado. ✨', posts: '94', followers: '588', following: '65' },
+    { handle: 'hosteria_hualcupen', name: 'Hosteria Hualcupen', bio: 'Tu casa en Copahue 🇦🇷 A 1 cuadra de las termas.', posts: '167', followers: '2.718', following: '450' },
+    { handle: 'somoscopahue', name: 'Somoscopahue', bio: 'COPAHUE | Neuquén. Un destino para vivir todo el año 🏔️', posts: '36', followers: '2.818', following: '34' }
   ];
   const buttons = [...document.querySelectorAll('.brand-tabs button')];
   const posts = [...card.querySelectorAll('.profile-grid span')];
-  const link = card.querySelector('.profile-link');
+  const link = document.querySelector('.profile-link');
   const sheet = (a) => `assets/img/cuenta-${a.handle}.webp`;
+  const set = (sel, text) => { card.querySelector(sel).textContent = text; };
   let current = 0;
   function label(a) { posts.forEach((p, i) => p.setAttribute('aria-label', `Publicación ${i + 1} de @${a.handle}`)); }
   function apply(a) {
     card.style.setProperty('--sheet', `url("${sheet(a)}")`);
-    card.querySelector('.handle').textContent = `@${a.handle}`;
-    card.querySelector('.category').textContent = a.category;
-    card.querySelector('.avatar').textContent = a.avatar;
+    set('.handle', a.handle);
+    set('.name', a.name);
+    set('.bio', a.bio);
+    set('.n-posts', a.posts);
+    set('.n-followers', a.followers);
+    set('.n-following', a.following);
+    card.querySelectorAll('.avatar').forEach((img) => { img.src = `assets/img/avatar-${a.handle}.webp`; });
     link.href = `https://www.instagram.com/${a.handle}/`;
     label(a);
   }
