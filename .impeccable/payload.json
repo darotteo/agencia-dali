@@ -1,0 +1,41 @@
+{
+  "title": "Elegí la composición del inicio",
+  "question": "Tres formas de abrir agenciadali.lat. Las tres usan la marca (violeta, la D.) y tu trabajo real. Elegí una, pedí otra tirada o escribí un ajuste.",
+  "options": [
+    {
+      "id": "feed",
+      "label": "El feed es la portada",
+      "kicker": "THE ROLL",
+      "thesis": "La portada es una grilla gigante donde cada cuadro es trabajo real: webs, apps, posts y la marca.",
+      "palette": ["#110e1a", "#5146e5", "#c7b9ff", "#f8f7f4"],
+      "materials": ["capturas reales", "cuadros que se levantan en 3D"],
+      "viewport": "Grilla a pantalla completa: el titular ocupa un bloque grande, el resto son capturas de Patagonia Homes, Copahue, SyncroBeat y posts; WhatsApp vive en un cuadro violeta.",
+      "risk": "Si las capturas gritan más que el titular, la oferta tarda un segundo más en leerse.",
+      "raised": [{"from": "tablero de estación (split-flap)", "raise": "El titular cambia el servicio letra por letra: Marcas, Webs, Apps, Redes."}],
+      "html": ".impeccable/mocks/decision/feed.html"
+    },
+    {
+      "id": "d-monumental",
+      "label": "La D. monumental",
+      "thesis": "La D. de la marca en cromo 3D, enorme y al centro; el titular se parte alrededor.",
+      "palette": ["#0d0a17", "#5146e5", "#c7b9ff", "#d9d6e2"],
+      "materials": ["cromo 3D en tiempo real", "cinta de servicios"],
+      "viewport": "Fondo violeta noche; 'Diseñamos' arriba a la izquierda, 'lo que viene.' abajo a la derecha; la D. gira con el mouse y el scroll; cinta de servicios al pie.",
+      "risk": "Muestra la marca antes que el trabajo: los proyectos esperan al scroll.",
+      "html": ".impeccable/mocks/decision/d-monumental.html"
+    },
+    {
+      "id": "manual",
+      "label": "Manual de marca abierto",
+      "thesis": "La portada es la página 1 del manual de marca de Dali: construcción de la D., colores y un índice de servicios.",
+      "palette": ["#efeee9", "#171421", "#5146e5", "#c7b9ff"],
+      "materials": ["grilla técnica", "D. con líneas de construcción en 3D"],
+      "viewport": "Papel con grilla; la D. armándose con cotas a la derecha; titular como 'Sección 01'; los cuatro servicios como índice numerado que lleva a cada capítulo.",
+      "risk": "Puede sentirse técnico o frío para el dueño de un restaurante.",
+      "html": ".impeccable/mocks/decision/manual.html"
+    }
+  ],
+  "reroll": true,
+  "steer": true,
+  "buildPath": {"value": "code"}
+}
