@@ -29,7 +29,7 @@ export function startD(stage) {
   const canvas = stage.querySelector('.d-canvas');
   const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'default' });
   renderer.setClearColor(0x000000, 0);
-  renderer.setPixelRatio(Math.min(devicePixelRatio, matchMedia('(pointer: coarse)').matches ? 1.5 : 1.75)); // phones: less GPU work
+  renderer.setPixelRatio(Math.min(devicePixelRatio, matchMedia('(pointer: coarse)').matches ? 1.25 : 1.5)); // phones: less GPU work
   renderer.toneMapping = ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
 
@@ -94,10 +94,9 @@ export function startD(stage) {
     if (onScreen && !covered && !document.hidden) { last = performance.now(); frame = requestAnimationFrame(tick); }
   };
   new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; run(); }).observe(stage);
-  // The pinned hero never leaves the viewport, so stop drawing once the page has risen over it.
-  const sheet = document.querySelector('.sheet');
-  if (sheet) addEventListener('scroll', () => {
-    const now = sheet.getBoundingClientRect().top <= 0;
+  // The pinned hero stays in the viewport while it fades out, so stop drawing once it is gone.
+  addEventListener('scroll', () => {
+    const now = scrollY > innerHeight * 1.4;
     if (now !== covered) { covered = now; run(); }
   }, { passive: true });
   document.addEventListener('visibilitychange', run);

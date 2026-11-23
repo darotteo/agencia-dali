@@ -15,17 +15,15 @@ const scenes = [];
 (() => {
   const hero = document.querySelector('.hero');
   if (!hero || reduced.matches) return;
-  const pin = hero.querySelector('.hero-pin');
+  const night = hero.querySelector('.hero-night');
   const world = hero.querySelector('.hero-world');
   const foot = hero.querySelector('.hero-foot');
-  const day = [243, 243, 245];
-  const night = [6, 6, 7];
   scenes.push(() => {
     const p = progress(hero);
     world.style.transform = `translateZ(${(p * 1000).toFixed(1)}px)`;
     world.style.opacity = (1 - clamp((p - .55) / .35)).toFixed(3);
-    const k = clamp((p - .3) / .45);
-    pin.style.backgroundColor = `rgb(${day.map((c, i) => Math.round(c + (night[i] - c) * k)).join(',')})`;
+    world.style.visibility = p > .9 ? 'hidden' : ''; // stops compositing the spinning ring once it has faded
+    night.style.opacity = clamp((p - .3) / .45).toFixed(3);
     foot.style.opacity = (1 - clamp(p / .22)).toFixed(3);
     foot.style.visibility = p > .22 ? 'hidden' : '';
   });
@@ -74,7 +72,9 @@ const scenes = [];
     for (const s of shards) {
       const z = -4200 + s.z * 1.02 + p * 4700;
       s.el.style.transform = `translate(-50%, -50%) translate3d(${s.x}vw, ${s.y}vh, ${z.toFixed(0)}px)`;
-      s.el.style.opacity = (clamp((z + 4200) / 1400) * clamp((420 - z) / 320)).toFixed(3);
+      const o = clamp((z + 4200) / 1400) * clamp((420 - z) / 320);
+      s.el.style.opacity = o.toFixed(3);
+      s.el.style.visibility = o > 0 ? '' : 'hidden'; // drops unseen shards from compositing
     }
     const f = p * n;
     stages.forEach((st, i) => {
@@ -83,7 +83,6 @@ const scenes = [];
       if (i < n - 1) o = Math.min(o, clamp((1 - local) / .2));
       st.style.opacity = o.toFixed(3);
       st.style.transform = `translateY(${((1 - o) * (local < .5 ? 28 : -28)).toFixed(1)}px)`;
-      st.style.filter = o < .99 ? `blur(${((1 - o) * 8).toFixed(1)}px)` : '';
       st.style.pointerEvents = o < .5 ? 'none' : '';
     });
     dots.forEach((d, i) => d.classList.toggle('on', i === Math.min(n - 1, Math.floor(f))));
@@ -108,7 +107,7 @@ render();
   const stage = document.querySelector('.hero-d');
   const ok = stage && !reduced.matches && !navigator.connection?.saveData && 'WebGL2RenderingContext' in window;
   if (!ok) return;
-  const start = () => import('./hero-d.js?v=n-1').then(({ startD }) => startD(stage)).catch((err) => console.warn('D 3D:', err));
+  const start = () => import('./hero-d.js?v=n-2').then(({ startD }) => startD(stage)).catch((err) => console.warn('D 3D:', err));
   if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
 })();
 
