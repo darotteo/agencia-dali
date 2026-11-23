@@ -1,50 +1,114 @@
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const finePointer = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+if (reduced.matches) document.documentElement.classList.add('calm');
 
-// Blocks rise in the first time they enter the viewport; those arriving together are staggered.
-const io = new IntersectionObserver((entries) => {
-  let i = 0;
-  for (const e of entries) if (e.isIntersecting) {
-    e.target.style.transitionDelay = `${i++ * 60}ms`;
-    e.target.classList.add('in');
-    io.unobserve(e.target);
-  }
-}, { rootMargin: '0px 0px -8% 0px' });
-document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
+// 0 when the section's top reaches the top of the screen, 1 when its bottom reaches the bottom.
+function progress(el) {
+  const r = el.getBoundingClientRect();
+  const span = r.height - innerHeight;
+  return span > 0 ? clamp(-r.top / span) : 0;
+}
+const scenes = [];
 
-// Hero and sections are sticky sheets. One taller than the screen pins only once its bottom reaches the bottom edge;
-// the next sheet then slides over it and a shade darkens it as it gets covered.
+// Hero: the camera flies into the ring and the light page turns to night.
 (() => {
-  const panels = [document.querySelector('.hero'), ...document.querySelectorAll('.sheet > section')].filter(Boolean);
-  if (!panels.length) return;
-  const fit = () => panels.forEach((p) => { p.style.top = `${Math.min(0, innerHeight - p.offsetHeight)}px`; });
-  fit();
-  new ResizeObserver(fit).observe(document.body);
-  addEventListener('resize', fit);
-  const layers = panels.slice(1, -1).map((p, i) => {
-    const shade = Object.assign(document.createElement('div'), { className: 'shade' });
-    shade.setAttribute('aria-hidden', 'true');
-    p.append(shade);
-    return { shade, next: panels[i + 2] };
+  const hero = document.querySelector('.hero');
+  if (!hero || reduced.matches) return;
+  const pin = hero.querySelector('.hero-pin');
+  const world = hero.querySelector('.hero-world');
+  const foot = hero.querySelector('.hero-foot');
+  const day = [243, 243, 245];
+  const night = [6, 6, 7];
+  scenes.push(() => {
+    const p = progress(hero);
+    world.style.transform = `translateZ(${(p * 1000).toFixed(1)}px)`;
+    world.style.opacity = (1 - clamp((p - .55) / .35)).toFixed(3);
+    const k = clamp((p - .3) / .45);
+    pin.style.backgroundColor = `rgb(${day.map((c, i) => Math.round(c + (night[i] - c) * k)).join(',')})`;
+    foot.style.opacity = (1 - clamp(p / .22)).toFixed(3);
+    foot.style.visibility = p > .22 ? 'hidden' : '';
   });
-  let queued = false;
-  function shadeAll() {
-    queued = false;
-    for (const { shade, next } of layers) {
-      const covered = 1 - next.getBoundingClientRect().top / innerHeight;
-      shade.style.opacity = (Math.min(1, Math.max(0, covered)) * .5).toFixed(3);
-    }
-  }
-  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(shadeAll); } }, { passive: true });
-  shadeAll();
 })();
+
+// Projects: vertical scroll moves the row of panels sideways.
+(() => {
+  const work = document.querySelector('.work');
+  if (!work) return;
+  const track = work.querySelector('.work-track');
+  const bar = work.querySelector('.work-progress span');
+  let distance = 0;
+  const fit = () => {
+    distance = Math.max(0, track.scrollWidth - innerWidth);
+    work.style.height = `${innerHeight + distance}px`;
+  };
+  fit();
+  new ResizeObserver(fit).observe(track);
+  addEventListener('resize', fit);
+  scenes.push(() => {
+    const p = progress(work);
+    track.style.transform = `translate3d(${(-p * distance).toFixed(1)}px, 0, 0)`;
+    bar.style.transform = `scaleX(${p.toFixed(3)})`;
+  });
+  // Keyboard: tabbing to a panel scrolls the page to the point where that panel is on screen.
+  track.addEventListener('focusin', (e) => {
+    const item = e.target.closest('.panel');
+    if (!item || !distance) return;
+    const top = work.getBoundingClientRect().top + scrollY;
+    scrollTo({ top: top + clamp((item.offsetLeft - innerWidth * .08) / distance) * distance, behavior: 'instant' });
+  });
+})();
+
+// Services: shards of the work fly past the camera while each service takes the centre in turn.
+(() => {
+  const fly = document.querySelector('.fly');
+  if (!fly || reduced.matches) return;
+  const shards = [...fly.querySelectorAll('.shard')].map((el) => ({ el, x: +el.dataset.x, y: +el.dataset.y, z: +el.dataset.z }));
+  const stages = [...fly.querySelectorAll('.stage')];
+  const dots = [...fly.querySelectorAll('.fly-dots li')];
+  const n = stages.length;
+  scenes.push(() => {
+    const r = fly.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    const p = progress(fly);
+    for (const s of shards) {
+      const z = -4200 + s.z + p * 4600;
+      s.el.style.transform = `translate(-50%, -50%) translate3d(${s.x}vw, ${s.y}vh, ${z.toFixed(0)}px)`;
+      s.el.style.opacity = (clamp((z + 4200) / 1400) * clamp((420 - z) / 320)).toFixed(3);
+    }
+    const f = p * n;
+    stages.forEach((st, i) => {
+      const local = f - i;
+      let o = i === 0 ? 1 : clamp(local / .2);
+      if (i < n - 1) o = Math.min(o, clamp((1 - local) / .2));
+      st.style.opacity = o.toFixed(3);
+      st.style.transform = `translateY(${((1 - o) * (local < .5 ? 28 : -28)).toFixed(1)}px)`;
+      st.style.filter = o < .99 ? `blur(${((1 - o) * 8).toFixed(1)}px)` : '';
+      st.style.pointerEvents = o < .5 ? 'none' : '';
+    });
+    dots.forEach((d, i) => d.classList.toggle('on', i === Math.min(n - 1, Math.floor(f))));
+  });
+  // Keyboard: tabbing into a service scrolls to the moment it is on screen.
+  fly.addEventListener('focusin', (e) => {
+    const i = stages.indexOf(e.target.closest('.stage'));
+    if (i < 0) return;
+    const r = fly.getBoundingClientRect();
+    scrollTo({ top: r.top + scrollY + (i + .5) / n * (r.height - innerHeight), behavior: 'instant' });
+  });
+})();
+
+let queued = false;
+const render = () => { queued = false; for (const scene of scenes) scene(); };
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(render); } }, { passive: true });
+addEventListener('resize', render);
+render();
 
 // The hero D becomes real-time 3D after the page has loaded; the SVG poster stays with reduced motion, Save-Data or no WebGL2.
 (() => {
   const stage = document.querySelector('.hero-d');
   const ok = stage && !reduced.matches && !navigator.connection?.saveData && 'WebGL2RenderingContext' in window;
   if (!ok) return;
-  const start = () => import('./hero-d.js?v=k-2').then(({ startD }) => startD(stage)).catch((err) => console.warn('D 3D:', err));
+  const start = () => import('./hero-d.js?v=n-1').then(({ startD }) => startD(stage)).catch((err) => console.warn('D 3D:', err));
   if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
 })();
 
@@ -141,15 +205,3 @@ document.querySelectorAll('[data-tilt]').forEach((area) => {
   buttons.forEach((btn, i) => btn.addEventListener('click', () => show(i)));
 })();
 
-// Real-time 3D for the SyncroBeat case on large screens, loaded only when the case comes near.
-(() => {
-  const stage = document.querySelector('.case-stage');
-  const ok = stage && matchMedia('(min-width: 861px)').matches && !reduced.matches && 'WebGL2RenderingContext' in window;
-  if (!ok) return;
-  const watch = new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting) return;
-    watch.disconnect();
-    import('./scene.js?v=c-1').then(({ startScene }) => startScene()).catch((err) => console.warn('Escena 3D:', err));
-  }, { rootMargin: '600px 0px' });
-  watch.observe(stage);
-})();
