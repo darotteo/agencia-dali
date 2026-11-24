@@ -76,8 +76,10 @@ export function startD(stage) {
   let last = 0;
   let onScreen = true;
   let covered = false;
+  const gap = matchMedia('(pointer: coarse)').matches ? 30 : 0; // phones: 30 fps is plenty for a slow sway
   function tick(time) {
     frame = requestAnimationFrame(tick);
+    if (time - last < gap) return;
     const dt = Math.min((time - last) / 1000 || 0, .05);
     last = time;
     const follow = 1 - Math.exp(-dt * 4);

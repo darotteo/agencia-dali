@@ -3,12 +3,22 @@ const finePointer = matchMedia('(hover: hover) and (pointer: fine) and (prefers-
 if (reduced.matches) document.documentElement.classList.add('calm');
 
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
+// Section geometry is read once and on resize, so a scroll frame only writes styles.
+const geo = new Map();
+function measure() {
+  for (const el of geo.keys()) {
+    const r = el.getBoundingClientRect();
+    geo.set(el, { top: r.top + scrollY, height: r.height });
+  }
+}
+const watch = (el) => { geo.set(el, null); measure(); };
 // 0 when the section's top reaches the top of the screen, 1 when its bottom reaches the bottom.
 function progress(el) {
-  const r = el.getBoundingClientRect();
-  const span = r.height - innerHeight;
-  return span > 0 ? clamp(-r.top / span) : 0;
+  const g = geo.get(el);
+  const span = g.height - innerHeight;
+  return span > 0 ? clamp((scrollY - g.top) / span) : 0;
 }
+const onScreen = (el) => { const g = geo.get(el); return scrollY + innerHeight > g.top && scrollY < g.top + g.height; };
 const scenes = [];
 
 // Hero: the camera flies into the ring and the light page turns to night.
@@ -18,6 +28,7 @@ const scenes = [];
   const night = hero.querySelector('.hero-night');
   const world = hero.querySelector('.hero-world');
   const foot = hero.querySelector('.hero-foot');
+  watch(hero);
   scenes.push(() => {
     const p = progress(hero);
     world.style.transform = `translateZ(${(p * 1000).toFixed(1)}px)`;
@@ -41,6 +52,7 @@ const scenes = [];
     work.style.height = `${innerHeight + distance}px`;
   };
   fit();
+  geo.set(work, null);
   new ResizeObserver(fit).observe(track);
   addEventListener('resize', fit);
   scenes.push(() => {
@@ -65,14 +77,21 @@ const scenes = [];
   const stages = [...fly.querySelectorAll('.stage')];
   const dots = [...fly.querySelectorAll('.fly-dots li')];
   const n = stages.length;
+  watch(fly);
+  let cap = 1;
+  const fitCap = () => { cap = innerWidth < 700 ? .4 : 1; }; // on phones the text spans the screen, so shards stay in the background
+  fitCap();
+  addEventListener('resize', fitCap);
   scenes.push(() => {
-    const r = fly.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > innerHeight) return;
+    if (!onScreen(fly)) return;
     const p = progress(fly);
     for (const s of shards) {
       const z = -4200 + s.z * 1.02 + p * 4700;
       s.el.style.transform = `translate(-50%, -50%) translate3d(${s.x}vw, ${s.y}vh, ${z.toFixed(0)}px)`;
-      const o = clamp((z + 4200) / 1400) * clamp((420 - z) / 320);
+      // Shards stay faint while they cross the text and come up as they reach the edges.
+      const k = 900 / (900 - Math.min(z, 860));
+      const out = clamp(Math.max((Math.abs(s.x) * k - 22) / 12, (Math.abs(s.y) * k - 26) / 12));
+      const o = clamp((z + 4200) / 1400) * clamp((420 - z) / 320) * (.14 + .86 * out) * cap;
       s.el.style.opacity = o.toFixed(3);
       s.el.style.visibility = o > 0 ? '' : 'hidden'; // drops unseen shards from compositing
     }
@@ -95,6 +114,9 @@ const scenes = [];
     scrollTo({ top: r.top + scrollY + (i + .5) / n * (r.height - innerHeight), behavior: 'instant' });
   });
 })();
+
+measure();
+new ResizeObserver(measure).observe(document.body);
 
 let queued = false;
 const render = () => { queued = false; for (const scene of scenes) scene(); };
