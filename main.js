@@ -124,13 +124,13 @@ addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimatio
 addEventListener('resize', render);
 render();
 
-// The hero D becomes real-time 3D after the page has loaded; the SVG poster stays with reduced motion, Save-Data or no WebGL2.
+// The hero D becomes real-time 3D as soon as three.js arrives (the poster shows until then); the SVG poster stays with reduced motion, Save-Data or no WebGL2.
 (() => {
   const stage = document.querySelector('.hero-d');
   const ok = stage && !reduced.matches && !navigator.connection?.saveData && 'WebGL2RenderingContext' in window;
   if (!ok) return;
-  const start = () => import('./hero-d.js?v=n-2').then(({ startD }) => startD(stage)).catch((err) => console.warn('D 3D:', err));
-  if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
+  const start = () => import('./hero-d.js?v=n-4').then(({ startD }) => startD(stage)).catch((err) => console.warn('D 3D:', err));
+  start();
 })();
 
 // Decorative tilt toward the pointer for the 3D stages and project shots. Mouse only.
