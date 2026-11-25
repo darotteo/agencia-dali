@@ -138,6 +138,19 @@ document.querySelectorAll('[data-tilt]').forEach((area) => {
   area.addEventListener('pointerleave', () => { target.style.transform = ''; });
 });
 
+// Lower sections: each block settles in once as it reaches the screen; the CSS gives each kind its own entrance.
+(() => {
+  if (reduced.matches) return;
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -12% 0px' });
+  document.querySelectorAll('.sec-head, .kinds-copy, .studio-copy, .swap li, .case, .steps li, .deliverables li, .timeline li, .faq details, .contact h2, .contact .wrap > p, .contact-list li').forEach((el) => {
+    el.style.setProperty('--i', Math.min([...el.parentElement.children].indexOf(el), 6)); // stagger within its list
+    el.classList.add('reveal');
+    io.observe(el);
+  });
+})();
+
 // App kinds: an ARIA tablist; the 3D stage turns to the selected kind.
 (() => {
   const tabs = [...document.querySelectorAll('.kind-tabs [role="tab"]')];
