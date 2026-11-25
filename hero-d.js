@@ -1,10 +1,14 @@
-// Hands the hero D's canvas to a worker (d-worker.js) and feeds it size, pointer, scroll and whether it should draw.
-export function startD(stage) {
-  const canvas = stage.querySelector('.d-canvas');
-  // Without OffscreenCanvas (Safari before 17) the SVG poster stays; drawing on the main thread froze scrolling for seconds.
-  if (!canvas.transferControlToOffscreen) return;
+// The hero D becomes real-time 3D: its canvas goes to a worker (d-worker.js) that draws it off the main thread.
+// Loaded async right after the canvas, so it starts while the rest of the page is still loading.
+(() => {
+  const stage = document.querySelector('.hero-d');
+  const canvas = stage?.querySelector('.d-canvas');
+  // The SVG poster stays with reduced motion, Save-Data, or no OffscreenCanvas/WebGL2 (Safari before 17).
+  const ok = canvas?.transferControlToOffscreen && 'WebGL2RenderingContext' in window
+    && !matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.connection?.saveData;
+  if (!ok) return;
   const coarse = matchMedia('(pointer: coarse)').matches;
-  const worker = new Worker(new URL('./d-worker.js?v=n-1', import.meta.url), { type: 'module' });
+  const worker = new Worker('d-worker.js?v=n-2', { type: 'module' });
   const offscreen = canvas.transferControlToOffscreen();
   worker.postMessage({
     canvas: offscreen,
@@ -40,4 +44,4 @@ export function startD(stage) {
   addEventListener('scroll', onScroll, { passive: true });
   document.addEventListener('visibilitychange', run);
   onScroll();
-}
+})();

@@ -1,7 +1,7 @@
 // Draws the hero "D." on an OffscreenCanvas in a worker, so building and rendering it never block scrolling.
 import {
-  ACESFilmicToneMapping, Color, DirectionalLight, ExtrudeGeometry, Group, Mesh, MeshBasicMaterial,
-  MeshPhysicalMaterial, PerspectiveCamera, PlaneGeometry, PMREMGenerator, Scene, Shape, SphereGeometry, WebGLRenderer
+  ACESFilmicToneMapping, CubeUVReflectionMapping, DataTexture, DataUtils, DirectionalLight, ExtrudeGeometry, Group, HalfFloatType,
+  LinearFilter, Mesh, MeshPhysicalMaterial, PerspectiveCamera, RGBAFormat, Scene, Shape, SphereGeometry, WebGLRenderer
 } from './assets/vendor/three.module.min.js';
 
 // The Dali "D." in polished metal. Same outline as the SVG poster it replaces (1 unit = 50 SVG units).
@@ -25,31 +25,25 @@ function letterD() {
   return geometry;
 }
 
-// Soft studio light for the metal to reflect: a few glowing softboxes, pre-filtered once.
-function studioEnvironment(renderer) {
-  const studio = new Scene();
-  studio.background = new Color(0x40374d);
-  const softboxes = [
-    { position: [-4, 4, 4], size: [6, 3], color: 0xfff1e0, power: 3.7 },
-    { position: [4, 2, -3], size: [3, 7], color: 0xad8fff, power: 3.4 },
-    { position: [.5, 7, 0], size: [4, 3], color: 0xe8ddff, power: 2.2 },
-    { position: [0, -.5, 6.2], size: [5, 1], color: 0xece8ff, power: 1.15 }
-  ];
-  for (const { position, size, color, power } of softboxes) {
-    const box = new Mesh(new PlaneGeometry(...size), new MeshBasicMaterial({ color: new Color(color).multiplyScalar(power) }));
-    box.position.set(...position);
-    box.lookAt(0, 0, 0);
-    studio.add(box);
-  }
-  const pmrem = new PMREMGenerator(renderer);
-  const environment = pmrem.fromScene(studio, .035, .1, 25, { size: 128 });
-  for (const box of studio.children) {
-    box.geometry.dispose();
-    box.material.dispose();
-  }
-  pmrem.dispose();
-  return environment;
+// shortcut: the studio light the metal reflects is baked into d-studio.png (PMREM cubeUV, sqrt-encoded over STUDIO_MAX)
+// from the softbox scene in scene.js's studioEnvironment (git history); building it here took ~1.3 s. Re-bake if the lighting changes.
+const STUDIO_MAX = 3.6953125;
+async function studio() {
+  const blob = await (await fetch(new URL('./assets/img/d-studio.png', import.meta.url))).blob();
+  const bitmap = await createImageBitmap(blob, { colorSpaceConversion: 'none', premultiplyAlpha: 'none' });
+  const { width, height } = bitmap;
+  const ctx = new OffscreenCanvas(width, height).getContext('2d');
+  ctx.drawImage(bitmap, 0, 0);
+  const rgba = ctx.getImageData(0, 0, width, height).data;
+  const half = new Uint16Array(rgba.length);
+  for (let i = 0; i < rgba.length; i++) half[i] = DataUtils.toHalfFloat(i % 4 === 3 ? 1 : (rgba[i] / 255) ** 2 * STUDIO_MAX);
+  const texture = new DataTexture(half, width, height, RGBAFormat, HalfFloatType);
+  texture.mapping = CubeUVReflectionMapping;
+  texture.minFilter = texture.magFilter = LinearFilter;
+  texture.needsUpdate = true;
+  return texture;
 }
+const studioReady = studio();
 
 // Latest values from the page; messages may arrive before the scene is ready.
 const state = { width: 0, height: 0, aimX: 0, aimY: 0, scroll: 0, run: false };
@@ -69,7 +63,7 @@ async function build({ canvas, pixelRatio, gap }) {
   renderer.toneMappingExposure = 1.15;
 
   const scene = new Scene();
-  scene.environment = studioEnvironment(renderer).texture;
+  scene.environment = await studioReady;
   const key = new DirectionalLight(0xfff3e8, 1.6);
   key.position.set(-4, 5, 6);
   const rim = new DirectionalLight(0xad83ff, 3);
