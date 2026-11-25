@@ -27,13 +27,15 @@ const scenes = [];
   if (!hero || reduced.matches) return;
   const night = hero.querySelector('.hero-night');
   const world = hero.querySelector('.hero-world');
+  const fly = hero.querySelector('.hero-fly');
   const foot = hero.querySelector('.hero-foot');
   watch(hero);
   scenes.push(() => {
     const p = progress(hero);
     world.style.transform = `translateZ(${(p * 1000).toFixed(1)}px)`;
-    world.style.opacity = (1 - clamp((p - .55) / .35)).toFixed(3);
-    world.style.visibility = p > .9 ? 'hidden' : ''; // stops compositing the spinning ring once it has faded
+    fly.style.transform = `translateZ(${(p * 1000 + 10).toFixed(1)}px)`; // the D sits 10px in front of the world
+    world.style.opacity = fly.style.opacity = (1 - clamp((p - .55) / .35)).toFixed(3);
+    world.style.visibility = fly.style.visibility = p > .9 ? 'hidden' : ''; // stops compositing the spinning ring once it has faded
     night.style.opacity = clamp((p - .3) / .45).toFixed(3);
     foot.style.opacity = (1 - clamp(p / .22)).toFixed(3);
     foot.style.visibility = p > .22 ? 'hidden' : '';
@@ -211,20 +213,35 @@ document.querySelectorAll('[data-tilt]').forEach((area) => {
     label(a);
   }
   label(accounts[0]);
+  // Every account's posts and avatar are fetched and decoded once the page has loaded,
+  // so a tap swaps at once instead of waiting on a 60-170 KB download with the posts folded away.
+  const ready = new Map();
+  const load = (a) => {
+    if (!ready.has(a)) {
+      const img = new Image();
+      img.src = sheet(a);
+      const avatar = new Image();
+      avatar.src = `assets/img/avatar-${a.handle}.webp`;
+      ready.set(a, { img, done: Promise.all([img.decode(), avatar.decode()]).catch(() => {}) });
+    }
+    return ready.get(a).done;
+  };
+  const preload = () => (self.requestIdleCallback ?? setTimeout)(() => accounts.forEach(load));
+  if (document.readyState === 'complete') preload(); else addEventListener('load', preload, { once: true });
   function show(i) {
     if (i === current) return;
     current = i;
     buttons.forEach((btn, j) => btn.setAttribute('aria-pressed', String(j === i)));
     const a = accounts[i];
-    const img = new Image();
-    img.src = sheet(a);
-    if (reduced.matches) { img.decode().catch(() => {}).finally(() => apply(a)); return; }
-    // Fold the posts away, swap the sheet once it is decoded, then unfold.
-    const out = posts.map((p, j) => p.animate([{ transform: 'rotateY(0)' }, { transform: 'rotateY(90deg)' }], { duration: 180, delay: j * 35, easing: 'cubic-bezier(.77, 0, .175, 1)', fill: 'forwards' }).finished);
-    Promise.all([...out, img.decode().catch(() => {})]).then(() => {
+    const loaded = load(a);
+    if (reduced.matches) { loaded.then(() => { if (current === i) apply(a); }); return; }
+    // Fold the posts away, swap the sheet (already decoded), then unfold.
+    posts.forEach((p) => p.getAnimations().forEach((anim) => anim.cancel()));
+    const out = posts.map((p, j) => p.animate([{ transform: 'rotateY(0)' }, { transform: 'rotateY(90deg)' }], { duration: 120, delay: j * 20, easing: 'cubic-bezier(.55, 0, 1, .45)', fill: 'forwards' }).finished.catch(() => {}));
+    Promise.all([...out, loaded]).then(() => {
       if (current !== i) return;
       apply(a);
-      posts.forEach((p, j) => p.animate([{ transform: 'rotateY(-90deg)' }, { transform: 'rotateY(0)' }], { duration: 320, delay: j * 35, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'forwards' }));
+      posts.forEach((p, j) => p.animate([{ transform: 'rotateY(-90deg)' }, { transform: 'rotateY(0)' }], { duration: 260, delay: j * 20, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'forwards' }));
     });
   }
   buttons.forEach((btn, i) => btn.addEventListener('click', () => show(i)));

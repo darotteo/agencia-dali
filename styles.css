@@ -97,6 +97,8 @@ h1, h2, h3 { text-wrap: balance; }
 .card .ig-shot { flex: none; height: auto; aspect-ratio: 3 / 4; }
 .ig-icons { display: flex; gap: calc(var(--w) * .06); padding: calc(var(--w) * .06); }
 .ig-icons svg { width: calc(var(--w) * .1); height: calc(var(--w) * .1); fill: none; stroke: #000; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* The D flies with the world (main.js moves both) but is painted on its own, always in front of the cards. */
+.hero-fly { position: absolute; inset: 0; transform: translateZ(10px); pointer-events: none; }
 .hero-d { position: absolute; top: 46%; left: 50%; width: clamp(170px, min(28vw, 44svh), 380px); aspect-ratio: 1; transform: translate(-50%, -50%) translateZ(10px); pointer-events: none; }
 .d-poster { position: absolute; inset: 14%; width: 72%; height: 72%; transition: opacity .6s ease; }
 .d-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .6s ease; }
