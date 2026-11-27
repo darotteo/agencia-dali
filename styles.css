@@ -119,6 +119,8 @@ h1, h2, h3 { text-wrap: balance; }
 .panel { position: relative; isolation: isolate; width: min(66vw, 1040px); height: min(68svh, 660px); overflow: hidden; border-radius: 22px; background: var(--raised); color: #fff; }
 .panel img { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .9s var(--ease-out); }
 .panel::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(to top, rgba(6, 6, 7, .96), rgba(6, 6, 7, .74) 45%, rgba(6, 6, 7, .5)), linear-gradient(rgba(6, 6, 7, .7), rgba(6, 6, 7, 0) 26%); }
+/* SyncroBeat's site is already dark: a lighter veil keeps its phones visible and the title still reads. */
+#syncrobeat::after { background: linear-gradient(to top, rgba(6, 6, 7, .9), rgba(6, 6, 7, .3) 40%, rgba(6, 6, 7, .05)), linear-gradient(rgba(6, 6, 7, .55), rgba(6, 6, 7, 0) 24%); }
 .panel-meta { position: absolute; top: 28px; left: 32px; right: 32px; display: flex; flex-wrap: wrap; gap: 6px 22px; color: rgba(255, 255, 255, .88); font-size: .8rem; }
 .panel h3 { position: absolute; left: 32px; right: 200px; bottom: 28px; font: 800 clamp(2.8rem, 7vw, 6.5rem)/.88 var(--display); letter-spacing: -.045em; }
 .panel-go { position: absolute; right: 32px; bottom: 36px; display: inline-flex; align-items: center; gap: .4em; padding: 11px 16px; border-radius: 11px; background: rgba(255, 255, 255, .94); color: var(--ink); font-weight: 500; font-size: .88rem; transition: transform .16s var(--ease-out); }
