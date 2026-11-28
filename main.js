@@ -192,12 +192,12 @@ document.querySelectorAll('[data-tilt]').forEach((area) => {
     { handle: 'ananda_caviahue', name: 'Ananda Caviahue', bio: 'Despertate mirando el Lago Caviahue en un lugar soñado. ✨', posts: '94', followers: '588', following: '65' },
     { handle: 'hosteria_hualcupen', name: 'Hosteria Hualcupen', bio: 'Tu casa en Copahue 🇦🇷 A 1 cuadra de las termas.', posts: '167', followers: '2.718', following: '450' },
     { handle: 'somoscopahue', name: 'Somoscopahue', bio: 'COPAHUE | Neuquén. Un destino para vivir todo el año 🏔️', posts: '36', followers: '2.818', following: '34' },
-    { handle: 'syncrobeat.app', name: 'SyncroBeat | Metrónomo para bandas', bio: 'Click y pistas para bandas. Click en auriculares, pistas a la consola con Modo Studio. Para ensayos y shows. Probá SyncroBeat ↓', posts: '9', followers: '522', following: '375' }
+    { handle: 'syncrobeat.app', name: 'SyncroBeat | Metrónomo para bandas', bio: 'Click y pistas para bandas. Click en auriculares, pistas a la consola con Modo Studio. Para ensayos y shows. Probá SyncroBeat ↓', posts: '9', followers: '524', following: '374', v: 2 }
   ];
   const buttons = [...document.querySelectorAll('.brand-tabs button')];
   const posts = [...card.querySelectorAll('.profile-grid span')];
   const link = document.querySelector('.profile-link');
-  const sheet = (a) => `assets/img/cuenta-${a.handle}.webp`;
+  const sheet = (a) => `assets/img/cuenta-${a.handle}.webp${a.v ? `?v=${a.v}` : ''}`; // v: bump when a feed image is replaced, so caches refetch it
   const set = (sel, text) => { card.querySelector(sel).textContent = text; };
   let current = 0;
   function label(a) { posts.forEach((p, i) => p.setAttribute('aria-label', `Publicación ${i + 1} de @${a.handle}`)); }

@@ -42,7 +42,7 @@ Una sola agencia para identidad, web, apps a medida y redes: la marca se ve igua
 - Proyectos publicados: Patagonia Homes (homespatagonia.com), Copahue (copahue.com.ar), SyncroBeat (syncrobeat.online, web y app de metrónomo para bandas, instalable).
 - Conceptos ficticios: Lúmina, Nova, Sōma (`proyectos/`).
 - Cuentas de Instagram que la agencia gestiona hoy (confirmado por el usuario, 2026-11-23): @aldeatermalcopahue, @lasaraucariascaviahue, @ananda_caviahue, @hosteria_hualcupen, @somoscopahue, @syncrobeat.app (sumada el 2026-11-26).
-- Feeds reales de las 6 cuentas gestionadas: `assets/img/cuenta-<usuario>.webp` (últimas 6 publicaciones, capturadas de Instagram el 2026-11-23; @syncrobeat.app el 2026-11-26, con su logo de syncrobeat.online como foto de perfil).
+- Feeds reales de las 6 cuentas gestionadas: `assets/img/cuenta-<usuario>.webp` (últimas 6 publicaciones, capturadas de Instagram el 2026-11-23; @syncrobeat.app actualizada el 2026-11-28, con su logo de syncrobeat.online como foto de perfil).
 - No hay testimonios, métricas de clientes, prensa ni cantidad de clientes. No inventarlos.
 
 ## Product Principles
